@@ -20,4 +20,11 @@ export const routes: Routes = [
         (mod) => mod.UpcomingComponent
       ),
   },
+  {
+    path: 'detail',
+    loadComponent: () =>
+      import('./detailmovie/detailmovie.component').then(
+        (mod) => mod.DetailmovieComponent
+      ),
+  },
 ];
