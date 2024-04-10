@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { ThemeToggleComponent } from './theme-toggle/theme-toggle.component';
-import { RouterOutlet } from '@angular/router';
+import { RouterOutlet, RouterLink } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatToolbarModule } from '@angular/material/toolbar';
@@ -42,6 +42,7 @@ declare var localStorage: Storage;
     MatCardModule,
     MatListModule,
     MatSidenavModule,
+    RouterLink,
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
@@ -50,4 +51,25 @@ declare var localStorage: Storage;
 export class AppComponent {
   title = 'HubMovie';
   constructor(private router: Router) {}
+  genres: string[] = [
+    'Action',
+    'Adventure',
+    'Animation',
+    'Comedy',
+    'Crime',
+    'Documentary',
+    'Drama',
+    'Family',
+    'Fantasy',
+    'History',
+    'Horror',
+    'Music',
+    'Mystery',
+    'Romance',
+    'Science Fiction',
+    'Tv Movie',
+    'Thriller',
+    'War',
+    'Western',
+  ];
 }

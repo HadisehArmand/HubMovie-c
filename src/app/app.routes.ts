@@ -6,4 +6,18 @@ export const routes: Routes = [
     loadComponent: () =>
       import('./popular/popular.component').then((mod) => mod.PopularComponent),
   },
+  {
+    path: 'top rated',
+    loadComponent: () =>
+      import('./toprated/toprated.component').then(
+        (mod) => mod.TopratedComponent
+      ),
+  },
+  {
+    path: 'upcoming',
+    loadComponent: () =>
+      import('./upcoming/upcoming.component').then(
+        (mod) => mod.UpcomingComponent
+      ),
+  },
 ];

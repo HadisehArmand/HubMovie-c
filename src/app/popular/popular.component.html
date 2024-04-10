@@ -1,8 +1,8 @@
 <router-outlet></router-outlet>
 <router-outlet></router-outlet>
-<button class="flex justify-end w-full">
+<button class="w-full grid grid-cols-3 xl:grid-cols-4 gap-0">
   @for (hubmovie of this.hubmovie; track hubmovie.id){
-  <mat-card class="example-card xl:w-1/4 w-1/2">
+  <mat-card class="example-card w-3/4 my-8">
     <img mat-card-image [src]="hubmovie.poster_path" />
 
     <div class="grid justify-center text-white">

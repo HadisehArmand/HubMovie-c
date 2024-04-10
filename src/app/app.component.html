@@ -1,29 +1,36 @@
-<router-outlet></router-outlet>
-<div>
-  <header class="flex flex-row border-b border-slate-300 shadow-xl">
-    <!-- <button
-      mat-icon-button
-      class="example-icon"
-      aria-label="Example icon-button with menu icon"
-    >
-      <mat-icon class="flex lg:hidden">menu</mat-icon>
-    </button> -->
-
-    <!-- <span >My App</span> -->
-    <div class="app-container py-3">
-      <app-theme-toggle></app-theme-toggle>
+<div class="grid grid-cols-6 gap-0">
+  <header class="border-b border-slate-300 shadow-xl grid col-span-6">
+    <div dir="rtl" class="flex flex-row">
+      <div class="app-container py-3">
+        <app-theme-toggle></app-theme-toggle>
+      </div>
+      <button mat-button [matMenuTriggerFor]="aboveMenu">account</button>
+      <mat-menu #aboveMenu="matMenu" yPosition="above">
+        <button mat-menu-item>Guest Profile</button>
+        <button mat-menu-item>
+          <a
+            href="https://www.themoviedb.org/auth/access?request_token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYmYiOjE3MTI3NzE4MTIsImF1ZCI6IjNjZmM2ZTFkZDIzMWJkMWYyY2FhMTk4ZTczMTdhNmE0IiwianRpIjo2NzQ5MzI0LCJzY29wZXMiOlsicGVuZGluZ19yZXF1ZXN0X3Rva2VuIl0sImV4cCI6MTcxMjc3MjcxMiwidmVyc2lvbiI6MSwicmVkaXJlY3RfdG8iOiJodHRwczovL2FuZ3VsYXItbW92aWVzLWExMmQzLndlYi5hcHA6L2xpc3QvY2F0ZWdvcnkvcG9wdWxhciJ9.7jgbR3FJ0uKyx0bg0cf0PimMZspLnkHJmLQxCWwh988"
+            >Login</a
+          >
+        </button>
+      </mat-menu>
     </div>
-    <button mat-button [matMenuTriggerFor]="aboveMenu">account</button>
-    <mat-menu #aboveMenu="matMenu" yPosition="above">
-      <button mat-menu-item>Guest Profile</button>
-      <button mat-menu-item>Login</button>
-    </mat-menu>
   </header>
-  <div class="flex flex-col w-full h-1/5 border-r border-slate-300">
-    <div class="grid grid-cols-1">
-      <a>Popular</a>
-      <a>Top Rated</a>
-      <a>Upcoming</a>
+  <div
+    class="grid col-span-1 w-60 xl:w-80 border-r border-slate-300 shadow-xl h-fit"
+  >
+    <p class="font-medium">DISCOVER</p>
+    <div class="flex flex-col ml-1">
+      <a [routerLink]="'popular'">Popular</a>
+      <a [routerLink]="'top rated'">Top Rated</a>
+      <a [routerLink]="'upcoming'">Upcoming</a>
     </div>
+    <p class="font-medium">GENRES</p>
+    <mat-selection-list #shoes [multiple]="false">
+      @for (voc of genres; track voc) {
+      <mat-list-option [value]="voc">{{ voc }}</mat-list-option>
+      }
+    </mat-selection-list>
   </div>
+  <div dir="rtl" class="grid col-span-5"><router-outlet></router-outlet></div>
 </div>

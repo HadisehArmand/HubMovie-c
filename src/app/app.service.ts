@@ -35,7 +35,7 @@ export class MovieService {
     this.movie.subscribe((state) => {
       if (state.hubmovie) {
         state.hubmovie.forEach((movie) => {
-          console.log('title update:', movie.title);
+          console.log('title update:', movie.title, movie);
         });
       } else {
         console.warn('hubmovie is undefined in state');
@@ -49,9 +49,16 @@ export class MovieService {
   }
 
   updateMovieItems(newMovies: any[]) {
+    // Prepend base URL to poster_path and backdrop_path
+    const updatedMovies = newMovies.map((movie) => ({
+      ...movie,
+      poster_path: 'https://image.tmdb.org/t/p/w500' + movie.poster_path,
+      backdrop_path: 'https://image.tmdb.org/t/p/w500' + movie.backdrop_path,
+    }));
+
     this.movie.update((state) => ({
       ...state,
-      hubmovie: newMovies,
+      hubmovie: updatedMovies,
     }));
   }
 
@@ -59,17 +66,19 @@ export class MovieService {
     fetch(
       'https://api.themoviedb.org/3/movie/popular?api_key=4330f1f9e53b1cb6cdb2f0371cfdf059'
     )
-      .then((response) => response.json())
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        return response.json();
+      })
       .then((newMovies) => {
         console.log('fetch success');
-        console.log();
-        newMovies.forEach(
-          (hubmovie: { id: number; title: string }) => hubmovie.id
-        );
-        this.updateMovieItems(newMovies);
+        console.log(newMovies.results);
+        this.updateMovieItems(newMovies.results);
       })
       .catch((error) => {
-        // console.error('Error fetching data from API:', error);
+        console.error('Error fetching data from API:', error);
       });
   }
 }
