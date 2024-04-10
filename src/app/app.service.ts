@@ -62,6 +62,7 @@ export class MovieService {
       .then((response) => response.json())
       .then((newMovies) => {
         console.log('fetch success');
+        console.log();
         newMovies.forEach(
           (hubmovie: { id: number; title: string }) => hubmovie.id
         );

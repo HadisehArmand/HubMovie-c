@@ -1,5 +1,14 @@
 <router-outlet></router-outlet>
+<router-outlet></router-outlet>
+<button class="flex justify-end w-full">
+  @for (hubmovie of this.hubmovie; track hubmovie.id){
+  <mat-card class="example-card xl:w-1/4 w-1/2">
+    <img mat-card-image [src]="hubmovie.poster_path" />
 
-<p>popular works!</p>
-<p>popular works!</p>
-<p>popular works!</p>
+    <div class="grid justify-center text-white">
+      <mat-card-subtitle>{{ hubmovie.title }}</mat-card-subtitle>
+      <mat-card-subtitle>{{ hubmovie.popularity }}</mat-card-subtitle>
+    </div>
+  </mat-card>
+  }
+</button>

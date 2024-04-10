@@ -8,6 +8,7 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatCardModule } from '@angular/material/card';
 import { Router } from '@angular/router';
 import { MatListModule } from '@angular/material/list';
+import { MatSidenavModule } from '@angular/material/sidenav';
 
 interface Movie {
   hubmovie?: {
@@ -40,6 +41,7 @@ declare var localStorage: Storage;
     ThemeToggleComponent,
     MatCardModule,
     MatListModule,
+    MatSidenavModule,
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',

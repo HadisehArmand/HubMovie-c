@@ -1,13 +1,13 @@
 <router-outlet></router-outlet>
 <div>
   <header class="flex flex-row border-b border-slate-300 shadow-xl">
-    <button
+    <!-- <button
       mat-icon-button
       class="example-icon"
       aria-label="Example icon-button with menu icon"
     >
       <mat-icon class="flex lg:hidden">menu</mat-icon>
-    </button>
+    </button> -->
 
     <!-- <span >My App</span> -->
     <div class="app-container py-3">
@@ -19,29 +19,11 @@
       <button mat-menu-item>Login</button>
     </mat-menu>
   </header>
-
-  <button class="flex justify-end w-full">
-    <mat-card class="example-card xl:w-1/4 w-1/2">
-      <!-- <mat-card-header>
-        <div mat-card-avatar class="example-header-image"></div>
-        <mat-card-title>Shiba Inu</mat-card-title>
-        <mat-card-subtitle>Dog Breed</mat-card-subtitle>
-      </mat-card-header> -->
-      <img
-        mat-card-image
-        src="https://material.angular.io/assets/img/examples/shiba2.jpg"
-        alt="Photo of a Shiba Inu"
-      />
-
-      <div class="grid justify-center text-white">
-        <mat-card-subtitle>name</mat-card-subtitle>
-        <mat-card-subtitle>star</mat-card-subtitle>
-      </div>
-    </mat-card>
-  </button>
-  <div class="">
-    <button>popular</button>
-    <button>popular</button>
-    <button>popular</button>
+  <div class="flex flex-col w-full h-1/5 border-r border-slate-300">
+    <div class="grid grid-cols-1">
+      <a>Popular</a>
+      <a>Top Rated</a>
+      <a>Upcoming</a>
+    </div>
   </div>
 </div>

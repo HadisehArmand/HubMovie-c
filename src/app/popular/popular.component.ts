@@ -1,8 +1,7 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-
 import { Injectable } from '@angular/core';
-
+import { MatCardModule } from '@angular/material/card';
 import { MovieService } from '../app.service';
 
 @Injectable({
@@ -11,7 +10,7 @@ import { MovieService } from '../app.service';
 @Component({
   selector: 'app-popular',
   standalone: true,
-  imports: [RouterOutlet],
+  imports: [RouterOutlet, MatCardModule],
   templateUrl: './popular.component.html',
   styleUrl: './popular.component.scss',
 })
