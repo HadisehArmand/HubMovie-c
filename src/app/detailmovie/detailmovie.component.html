@@ -1,26 +1,30 @@
 <header dir="ltr" class="flex justify-center mb-96">
-  <div class="w-8/12 border border-slate-200">
+  <div class="w-8/12">
     <div class="grid grid-cols-2">
-      <img
-        mat-card-image
-        src="https://i.pinimg.com/564x/15/45/74/1545744781e1fb85d7c87db6f5c90460.jpg"
-      />
-      <div class="text-red-950">
-        <p class="text-left text-4xl ml-14">NAME</p>
+      <img mat-card-image src="{{ movie.poster_path }}" />
+      <div class="text-black">
+        <p class="text-left text-4xl ml-14">{{ movie.title }}</p>
         <div class="grid grid-cols-2 mt-8">
-          <p>popularity</p>
+          <p class="font-semibold my-5">popularity</p>
           <div>
-            <p>original_language/release_date/runtime</p>
+            <p class="my-5">{{ movie.popularity }}</p>
+          </div>
+          <p class="font-semibold my-5">release date</p>
+          <div>
+            <p class="my-5">{{ movie.release_date }}</p>
           </div>
         </div>
         <div class="grid grid-rows-1">
-          <p>The Genres</p>
-          <p>ganer</p>
+          <p class="font-semibold my-7">Genres</p>
         </div>
-        <p>description:</p>
-        <p>description</p>
-        <div>
-          <button [routerLink]="'popular'" class="bg-green-600 text-white">
+        <p class="font-semibold my-7">description:</p>
+        <p>{{ movie.overview }}</p>
+
+        <div class="my-28" dir="rtl">
+          <button
+            [routerLink]="'category/:categoryName'"
+            class="bg-green-700 text-white w-20 h-12"
+          >
             Back
           </button>
         </div>
@@ -28,3 +32,4 @@
     </div>
   </div>
 </header>
+<router-outlet></router-outlet>

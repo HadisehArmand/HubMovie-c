@@ -20,7 +20,7 @@ interface Movie {
     vote_count: number;
   }[];
 }
-interface Genre {
+export interface Genre {
   id: number;
   name: string;
 }
@@ -35,7 +35,7 @@ export class MovieService {
     const persist = persistState(this.movie, {
       key: 'movie',
       storage: localStorageStrategy,
-    })
+    });
   }
 
   getMovieItem$() {
@@ -51,13 +51,13 @@ export class MovieService {
       ...movie,
       poster_path: 'https://image.tmdb.org/t/p/w500' + movie.poster_path,
       backdrop_path: 'https://image.tmdb.org/t/p/w500' + movie.backdrop_path,
+      release_date: movie.release_date.slice(0, 4),
     }));
 
     this.movie.update((state) => ({
       ...state,
       hubmovie: updatedMovies,
     }));
-    console.log(this.movie.getValue());
   }
 
   updateGenres(newGenres: Genre[]) {
@@ -70,7 +70,9 @@ export class MovieService {
       hubmovie: [],
     }));
 
-    fetch(`https://api.themoviedb.org/3/movie/${q}?api_key=4330f1f9e53b1cb6cdb2f0371cfdf059`)
+    fetch(
+      `https://api.themoviedb.org/3/movie/${q}?api_key=4330f1f9e53b1cb6cdb2f0371cfdf059`
+    )
       .then((response) => {
         if (!response.ok) {
           throw new Error('Network response was not ok');
@@ -90,11 +92,15 @@ export class MovieService {
       ...state,
       hubmovie: [],
     }));
-    this.fetchGenresFromApi()
-      .then(genres => {
-        const genre = genres.find(genre => genre.name === q);
-        qId = genre ? genre.id : null;
-        fetch(`https://api.themoviedb.org/3/discover/movie?api_key=4330f1f9e53b1cb6cdb2f0371cfdf059&with_genres=${qId}`)
+    this.fetchGenresFromApi().then((genres) => {
+      const genre = genres.find((genre) => genre.name === q);
+      qId = genre ? genre.id : null;
+      if (!qId) {
+        return;
+      }
+      fetch(
+        `https://api.themoviedb.org/3/discover/movie?api_key=4330f1f9e53b1cb6cdb2f0371cfdf059&with_genres=${qId}`
+      )
         .then((response) => {
           if (!response.ok) {
             throw new Error('Network response was not ok');
@@ -107,11 +113,13 @@ export class MovieService {
         .catch((error) => {
           console.error('Error fetching data from API:', error);
         });
-      });
+    });
   }
   fetchGenresFromApi(): Promise<Genre[]> {
-    return fetch('https://api.themoviedb.org/3/genre/movie/list?api_key=4330f1f9e53b1cb6cdb2f0371cfdf059')
-      .then(response => {
+    return fetch(
+      'https://api.themoviedb.org/3/genre/movie/list?api_key=4330f1f9e53b1cb6cdb2f0371cfdf059'
+    )
+      .then((response) => {
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }
@@ -120,10 +128,18 @@ export class MovieService {
       .then((data: { genres: Genre[] }) => {
         return data.genres;
       })
-      .catch(error => {
+      .catch((error) => {
         console.error('Error fetching data from API:', error);
         return [];
       });
   }
-
+  getMovieById(id: number) {
+    return this.movie.pipe(
+      select((state) => {
+        const movie = state.hubmovie?.find((movie) => movie.id === id);
+        console.log(state.hubmovie?.find((movie) => movie.id === id));
+        return movie || null;
+      })
+    );
+  }
 }

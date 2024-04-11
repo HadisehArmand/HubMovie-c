@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { MovieService } from '../app.service';
 import { RouterOutlet } from '@angular/router';
 import { MatCardModule } from '@angular/material/card';
@@ -31,6 +31,7 @@ export class CategoryComponent {
 
   constructor(
     private route: ActivatedRoute,
+    private router: Router,
     private movieService: MovieService
   ) {
     this.queryParam = '';
@@ -47,5 +48,8 @@ export class CategoryComponent {
       this.hubmovie = items || [];
     });
     this.movieService.fetchDataFromApi(this.queryParam);
+  }
+  onMovieClick(movieId: number): void {
+    this.router.navigate(['/movies', movieId]);
   }
 }

@@ -1,7 +1,7 @@
 <router-outlet></router-outlet>
 <button class="w-full grid grid-cols-3 xl:grid-cols-4 gap-0">
   @for (hubmovie of this.hubmovie; track hubmovie.id){
-  <mat-card class="example-card w-3/4 my-8">
+  <mat-card class="example-card w-3/4 my-8" (click)="onMovieClick(hubmovie.id)">
     <img mat-card-image [src]="hubmovie.poster_path" />
 
     <div class="grid justify-center text-white">

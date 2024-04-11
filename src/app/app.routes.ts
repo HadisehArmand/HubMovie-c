@@ -1,7 +1,7 @@
 import { Routes } from '@angular/router';
 import { CategoryComponent } from './category/category.component';
 import { GenerComponent } from './gener/gener.component';
-import { MovieDetailComponent } from './movie-detail/movie-detail.component';
+import { DetailmovieComponent } from './detailmovie/detailmovie.component';
 
 export const routes: Routes = [
   {
@@ -12,5 +12,5 @@ export const routes: Routes = [
     path: 'gener/:generName',
     component: GenerComponent,
   },
-  { path: 'movies/:id', component: MovieDetailComponent },
+  { path: 'movies/:id', component: DetailmovieComponent },
 ];

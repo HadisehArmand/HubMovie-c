@@ -1,13 +1,46 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { MovieService } from '../app.service';
+import { Genre } from '../app.service';
 import { RouterOutlet, RouterLink } from '@angular/router';
-import { MatCardModule } from '@angular/material/card';
-import { MatListModule } from '@angular/material/list';
 
 @Component({
   selector: 'app-detailmovie',
-  standalone: true,
-  imports: [RouterOutlet, MatCardModule, MatListModule, RouterLink],
   templateUrl: './detailmovie.component.html',
-  styleUrl: './detailmovie.component.scss',
+  styleUrls: ['./detailmovie.component.scss'],
+  standalone: true,
+  imports: [RouterOutlet, RouterLink],
 })
-export class DetailmovieComponent {}
+export class DetailmovieComponent implements OnInit {
+  movieId: number;
+  movie: any;
+  genres: Genre[] = [];
+
+  constructor(
+    private route: ActivatedRoute,
+    private movieService: MovieService
+  ) {
+    this.movieId = 0;
+  }
+
+  ngOnInit(): void {
+    this.route.params.subscribe((params) => {
+      this.movieId = parseInt(params['id']);
+      this.fetchMovieDetails();
+    });
+    this.movieService.getGenres$().subscribe((genres) => {
+      this.genres = genres;
+    });
+  }
+
+  fetchMovieDetails(): void {
+    this.movieService.getMovieById(this.movieId).subscribe(
+      (movie) => {
+        this.movie = movie;
+      },
+      (error) => {
+        console.error('Error fetching movie details:', error);
+      }
+    );
+  }
+}

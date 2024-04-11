@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { MovieService } from '../app.service';
 import { RouterOutlet } from '@angular/router';
 import { MatCardModule } from '@angular/material/card';
@@ -32,6 +32,7 @@ export class GenerComponent {
 
   constructor(
     private route: ActivatedRoute,
+    private router: Router,
     private movieService: MovieService
   ) {
     this.queryParam = '';
@@ -48,5 +49,8 @@ export class GenerComponent {
       this.hubmovie = items || [];
     });
     this.movieService.fetchGenerDataFromApi(this.queryParam);
+  }
+  onMovieClick(movieId: number): void {
+    this.router.navigate(['/movies', movieId]);
   }
 }
