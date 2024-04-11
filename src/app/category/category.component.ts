@@ -1,20 +1,17 @@
 import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
-import { Injectable } from '@angular/core';
-import { MatCardModule } from '@angular/material/card';
+import { ActivatedRoute } from '@angular/router';
 import { MovieService } from '../app.service';
-
-@Injectable({
-  providedIn: 'root',
-})
+import { RouterOutlet } from '@angular/router';
+import { MatCardModule } from '@angular/material/card';
 @Component({
-  selector: 'app-popular',
+  selector: 'app-category',
   standalone: true,
   imports: [RouterOutlet, MatCardModule],
-  templateUrl: './popular.component.html',
-  styleUrl: './popular.component.scss',
+  templateUrl: './category.component.html',
+  styleUrl: './category.component.scss',
 })
-export class PopularComponent {
+export class CategoryComponent {
+  queryParam: string;
   hubmovie: {
     adult: boolean;
     backdrop_path: string;
@@ -32,12 +29,23 @@ export class PopularComponent {
     vote_count: number;
   }[] = [];
 
-  constructor(private movieService: MovieService) {}
-
+  constructor(
+    private route: ActivatedRoute,
+    private movieService: MovieService
+  ) {
+    this.queryParam = '';
+  }
   ngOnInit(): void {
+    this.route.params.subscribe((params) => {
+      this.queryParam = params['categoryName'];
+      this.fetchCategoryData();
+    });
+  }
+
+  fetchCategoryData(): void {
     this.movieService.getMovieItem$().subscribe((items) => {
       this.hubmovie = items || [];
     });
-    this.movieService.fetchDataFromApi();
+    this.movieService.fetchDataFromApi(this.queryParam);
   }
 }

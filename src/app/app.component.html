@@ -20,15 +20,20 @@
     class="grid col-span-1 w-60 xl:w-80 border-r border-slate-300 shadow-xl h-fit"
   >
     <p class="font-medium">DISCOVER</p>
-    <div class="flex flex-col">
-      <a [routerLink]="'popular'">Popular</a>
-      <a [routerLink]="'top rated'">Top Rated</a>
-      <a [routerLink]="'upcoming'">Upcoming</a>
+    <div class="flex flex-col ml-1">
+      <a [routerLink]="['category', 'popular']">Popular</a>
+      <a [routerLink]="['category', 'top_rated']">Top Rated</a>
+      <a [routerLink]="['category', 'upcoming']">Upcoming</a>
+      <a [routerLink]="['category', 'now_playing']">Now playing</a>
     </div>
     <p class="font-medium">GENRES</p>
     <mat-selection-list #shoes [multiple]="false">
       @for (voc of genres; track voc) {
-      <mat-list-option [value]="voc">{{ voc }}</mat-list-option>
+      <a [routerLink]="['gener', voc.name]">
+        <mat-list-option [value]="voc">
+          {{ voc.name }}
+        </mat-list-option>
+      </a>
       }
     </mat-selection-list>
   </div>

@@ -1,30 +1,16 @@
 import { Routes } from '@angular/router';
+import { CategoryComponent } from './category/category.component';
+import { GenerComponent } from './gener/gener.component';
+import { MovieDetailComponent } from './movie-detail/movie-detail.component';
 
 export const routes: Routes = [
   {
-    path: 'popular',
-    loadComponent: () =>
-      import('./popular/popular.component').then((mod) => mod.PopularComponent),
+    path: 'category/:categoryName',
+    component: CategoryComponent,
   },
   {
-    path: 'top rated',
-    loadComponent: () =>
-      import('./toprated/toprated.component').then(
-        (mod) => mod.TopratedComponent
-      ),
+    path: 'gener/:generName',
+    component: GenerComponent,
   },
-  {
-    path: 'upcoming',
-    loadComponent: () =>
-      import('./upcoming/upcoming.component').then(
-        (mod) => mod.UpcomingComponent
-      ),
-  },
-  {
-    path: 'detail',
-    loadComponent: () =>
-      import('./detailmovie/detailmovie.component').then(
-        (mod) => mod.DetailmovieComponent
-      ),
-  },
+  { path: 'movies/:id', component: MovieDetailComponent },
 ];

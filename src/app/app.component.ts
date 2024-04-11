@@ -9,6 +9,7 @@ import { MatCardModule } from '@angular/material/card';
 import { Router } from '@angular/router';
 import { MatListModule } from '@angular/material/list';
 import { MatSidenavModule } from '@angular/material/sidenav';
+import { MovieService } from './app.service';
 
 interface Movie {
   hubmovie?: {
@@ -50,26 +51,13 @@ declare var localStorage: Storage;
 })
 export class AppComponent {
   title = 'HubMovie';
-  constructor(private router: Router) {}
-  genres: string[] = [
-    'Action',
-    'Adventure',
-    'Animation',
-    'Comedy',
-    'Crime',
-    'Documentary',
-    'Drama',
-    'Family',
-    'Fantasy',
-    'History',
-    'Horror',
-    'Music',
-    'Mystery',
-    'Romance',
-    'Science Fiction',
-    'Tv Movie',
-    'Thriller',
-    'War',
-    'Western',
-  ];
+  genres: any[] = [];
+  constructor(private router: Router, private movieService: MovieService) {
+    this.genres = [];
+  }
+  ngOnInit(): void {
+    this.movieService.fetchGenresFromApi().then((genres) => {
+      this.genres = genres;
+    });
+  }
 }
