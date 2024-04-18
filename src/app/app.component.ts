@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { ThemeToggleComponent } from './theme-toggle/theme-toggle.component';
 import { RouterOutlet, RouterLink } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
@@ -10,7 +9,7 @@ import { Router } from '@angular/router';
 import { MatListModule } from '@angular/material/list';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MovieService } from './app.service';
-
+import { ThemeToggleComponent } from './theme-toggle/theme-toggle.component';
 interface Movie {
   hubmovie?: {
     adult: boolean;
@@ -39,11 +38,11 @@ declare var localStorage: Storage;
     MatButtonModule,
     MatIconModule,
     MatMenuModule,
-    ThemeToggleComponent,
     MatCardModule,
     MatListModule,
     MatSidenavModule,
     RouterLink,
+    ThemeToggleComponent,
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',

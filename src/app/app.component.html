@@ -1,41 +1,101 @@
-<div class="grid grid-cols-6 gap-0">
-  <header class="border-b border-slate-300 shadow-xl grid col-span-6">
-    <div dir="rtl" class="flex flex-row">
-      <div class="app-container py-3">
-        <app-theme-toggle></app-theme-toggle>
-      </div>
-      <button mat-button [matMenuTriggerFor]="aboveMenu">account</button>
-      <mat-menu #aboveMenu="matMenu" yPosition="above">
-        <button mat-menu-item>Guest Profile</button>
-        <button mat-menu-item>
-          <a
-            href="https://www.themoviedb.org/auth/access?request_token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYmYiOjE3MTI3NzE4MTIsImF1ZCI6IjNjZmM2ZTFkZDIzMWJkMWYyY2FhMTk4ZTczMTdhNmE0IiwianRpIjo2NzQ5MzI0LCJzY29wZXMiOlsicGVuZGluZ19yZXF1ZXN0X3Rva2VuIl0sImV4cCI6MTcxMjc3MjcxMiwidmVyc2lvbiI6MSwicmVkaXJlY3RfdG8iOiJodHRwczovL2FuZ3VsYXItbW92aWVzLWExMmQzLndlYi5hcHA6L2xpc3QvY2F0ZWdvcnkvcG9wdWxhciJ9.7jgbR3FJ0uKyx0bg0cf0PimMZspLnkHJmLQxCWwh988"
-            >Login</a
+<nav class="fixed top-0 z-50 w-full border-b border-gray-200">
+  <div class="px-3 py-3 lg:px-5 lg:pl-3">
+    <div class="flex items-center justify-between">
+      <div class="flex items-center justify-start rtl:justify-end">
+        <button
+          data-drawer-target="logo-sidebar"
+          data-drawer-toggle="logo-sidebar"
+          aria-controls="logo-sidebar"
+          type="button"
+          class="inline-flex items-center p-2 text-sm text-gray-500 rounded-lg sm:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
+        >
+          <span class="sr-only">Open sidebar</span>
+          <svg
+            class="w-6 h-6"
+            aria-hidden="true"
+            fill="currentColor"
+            viewBox="0 0 20 20"
+            xmlns="http://www.w3.org/2000/svg"
           >
+            <path
+              clip-rule="evenodd"
+              fill-rule="evenodd"
+              d="M2 4.75A.75.75 0 012.75 4h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 4.75zm0 10.5a.75.75 0 01.75-.75h7.5a.75.75 0 010 1.5h-7.5a.75.75 0 01-.75-.75zM2 10a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 10z"
+            ></path>
+          </svg>
         </button>
-      </mat-menu>
+        <a href="#" class="flex ms-2 md:me-24">
+          <span
+            class="self-center text-xl font-semibold sm:text-2xl whitespace-nowrap text-black"
+            >HubMovie</span
+          >
+        </a>
+      </div>
+      <div class="flex items-center">
+        <div class="flex items-center ms-3">
+          <div class="grid grid-rows-1 grid-flow-col gap-4">
+            <div class="app-container py-3">
+              <app-theme-toggle></app-theme-toggle>
+            </div>
+            <div>
+              <div dir="rtl" class="flex flex-row bg-white">
+                <button class="" mat-button [matMenuTriggerFor]="aboveMenu">
+                  account
+                </button>
+                <mat-menu #aboveMenu="matMenu" yPosition="above">
+                  <button mat-menu-item>Guest Profile</button>
+                  <button mat-menu-item>
+                    <a
+                      href="https://www.themoviedb.org/auth/access?request_token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYmYiOjE3MTI3NzE4MTIsImF1ZCI6IjNjZmM2ZTFkZDIzMWJkMWYyY2FhMTk4ZTczMTdhNmE0IiwianRpIjo2NzQ5MzI0LCJzY29wZXMiOlsicGVuZGluZ19yZXF1ZXN0X3Rva2VuIl0sImV4cCI6MTcxMjc3MjcxMiwidmVyc2lvbiI6MSwicmVkaXJlY3RfdG8iOiJodHRwczovL2FuZ3VsYXItbW92aWVzLWExMmQzLndlYi5hcHA6L2xpc3QvY2F0ZWdvcnkvcG9wdWxhciJ9.7jgbR3FJ0uKyx0bg0cf0PimMZspLnkHJmLQxCWwh988"
+                      >Login</a
+                    >
+                  </button>
+                </mat-menu>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-  </header>
-  <div
-    class="grid col-span-1 w-60 xl:w-80 border-r border-slate-300 shadow-xl h-fit"
-  >
-    <p class="font-medium">DISCOVER</p>
-    <div class="flex flex-col ml-1">
-      <a [routerLink]="['category', 'popular']">Popular</a>
-      <a [routerLink]="['category', 'top_rated']">Top Rated</a>
-      <a [routerLink]="['category', 'upcoming']">Upcoming</a>
-      <a [routerLink]="['category', 'now_playing']">Now playing</a>
-    </div>
-    <p class="font-medium">GENRES</p>
-    <mat-selection-list #shoes [multiple]="false">
-      @for (voc of genres; track voc) {
-      <a [routerLink]="['gener', voc.name]">
-        <mat-list-option [value]="voc">
-          {{ voc.name }}
-        </mat-list-option>
-      </a>
-      }
-    </mat-selection-list>
   </div>
-  <div dir="rtl" class="grid col-span-5"><router-outlet></router-outlet></div>
+</nav>
+
+<aside
+  id="logo-sidebar"
+  class="fixed top-0 left-0 z-40 w-64 h-screen pt-20 transition-transform -translate-x-full border-r sm:translate-x-0 mt-5"
+  aria-label="Sidebar"
+>
+  <div class="h-full px-3 pb-4 overflow-y-auto">
+    <ul class="space-y-2 font-medium">
+      <li>
+        <p class="font-medium mb-5">DISCOVER</p>
+        <div class="flex flex-col ml-1 font-normal">
+          <a class="pb-5" [routerLink]="['category', 'popular']">Popular</a>
+          <a class="pb-5" [routerLink]="['category', 'top_rated']">Top Rated</a>
+          <a class="pb-5" [routerLink]="['category', 'upcoming']">Upcoming</a>
+          <a class="pb-5" [routerLink]="['category', 'now_playing']"
+            >Now playing</a
+          >
+        </div>
+      </li>
+      <li>
+        <p class="font-medium">GENRES</p>
+        <mat-selection-list class="text-wi" #shoes [multiple]="false">
+          @for (voc of genres; track voc) {
+          <a class="text-blue-400" [routerLink]="['gener', voc.name]">
+            <mat-list-option [value]="voc">
+              {{ voc.name }}
+            </mat-list-option>
+          </a>
+          }
+        </mat-selection-list>
+      </li>
+    </ul>
+  </div>
+</aside>
+
+<div class="p-4 sm:ml-64 mt-5">
+  <div class="p-4 border-2 border-dashed rounded-lg mt-14">
+    <router-outlet></router-outlet>
+  </div>
 </div>
