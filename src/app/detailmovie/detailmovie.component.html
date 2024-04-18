@@ -2,22 +2,22 @@
   <div class="w-8/12">
     <div class="grid grid-cols-2">
       <img mat-card-image src="{{ movie.poster_path }}" />
-      <div class="text-black">
+      <div class="">
         <p class="text-left text-4xl ml-14">{{ movie.title }}</p>
         <div class="grid grid-cols-2 mt-8">
-          <p class="font-semibold my-5">popularity</p>
+          <p class="font-medium my-5">popularity</p>
           <div>
             <p class="my-5">{{ movie.popularity }}</p>
           </div>
-          <p class="font-semibold my-5">release date</p>
+          <p class="font-medium my-5">release date</p>
           <div>
             <p class="my-5">{{ movie.release_date }}</p>
           </div>
         </div>
         <div class="grid grid-rows-1">
-          <p class="font-semibold my-7">Genres</p>
+          <p class="font-medium my-7">Genres</p>
         </div>
-        <p class="font-semibold my-7">description:</p>
+        <p class="font-medium my-7">description:</p>
         <p>{{ movie.overview }}</p>
 
         <div class="my-28" dir="rtl">

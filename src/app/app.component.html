@@ -1,4 +1,4 @@
-<nav class="fixed top-0 z-50 w-full border-b border-gray-200">
+<nav class="top-0 z-50 w-full">
   <div class="px-3 py-3 lg:px-5 lg:pl-3">
     <div class="flex items-center justify-between">
       <div class="flex items-center justify-start rtl:justify-end">
@@ -24,9 +24,9 @@
             ></path>
           </svg>
         </button>
-        <a href="#" class="flex ms-2 md:me-24">
+        <a href="#" class="flexd flex ms-2 md:me-24">
           <span
-            class="self-center text-xl font-semibold sm:text-2xl whitespace-nowrap text-black"
+            class="self-center text-xl font-semibold sm:text-2xl whitespace-nowrap"
             >HubMovie</span
           >
         </a>
@@ -78,14 +78,16 @@
           >
         </div>
       </li>
+
       <li>
         <p class="font-medium">GENRES</p>
-        <mat-selection-list class="text-wi" #shoes [multiple]="false">
+        <mat-selection-list [multiple]="false">
           @for (voc of genres; track voc) {
-          <a class="text-blue-400" [routerLink]="['gener', voc.name]">
-            <mat-list-option [value]="voc">
-              {{ voc.name }}
-            </mat-list-option>
+          <a [routerLink]="['gener', voc.name]">
+            <p class="font-normal mt-8">{{ voc.name }}</p>
+            <!-- <mat-list-option> 
+                  <h3>{{ voc.name }}</h3> 
+                </mat-list-option> -->
           </a>
           }
         </mat-selection-list>
@@ -94,8 +96,8 @@
   </div>
 </aside>
 
-<div class="p-4 sm:ml-64 mt-5">
-  <div class="p-4 border-2 border-dashed rounded-lg mt-14">
+<div class="p-4 sm:ml-64">
+  <div class="p-4 rounded-lg">
     <router-outlet></router-outlet>
   </div>
 </div>
