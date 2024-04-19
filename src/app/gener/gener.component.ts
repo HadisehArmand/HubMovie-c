@@ -3,11 +3,12 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { MovieService } from '../app.service';
 import { RouterOutlet } from '@angular/router';
 import { MatCardModule } from '@angular/material/card';
+import { MatPaginatorModule } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-gener',
   standalone: true,
-  imports: [RouterOutlet, MatCardModule],
+  imports: [RouterOutlet, MatCardModule, MatPaginatorModule],
   templateUrl: './gener.component.html',
   styleUrl: './gener.component.scss',
 })
@@ -29,6 +30,8 @@ export class GenerComponent {
     vote_average: number;
     vote_count: number;
   }[] = [];
+  pageIndex = 0;
+  pageSize = 5;
 
   constructor(
     private route: ActivatedRoute,
@@ -52,5 +55,14 @@ export class GenerComponent {
   }
   onMovieClick(movieId: number): void {
     this.router.navigate(['/movies', movieId]);
+  }
+  onPageChange(event: any): void {
+    this.pageIndex = event.pageIndex;
+    this.pageSize = event.pageSize;
+  }
+  getCurrentPageItems(): any[] {
+    const startIndex = this.pageIndex * this.pageSize;
+    const endIndex = startIndex + this.pageSize;
+    return this.hubmovie.slice(startIndex, endIndex);
   }
 }

@@ -3,10 +3,11 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { MovieService } from '../app.service';
 import { RouterOutlet } from '@angular/router';
 import { MatCardModule } from '@angular/material/card';
+import { MatPaginatorModule } from '@angular/material/paginator';
 @Component({
   selector: 'app-category',
   standalone: true,
-  imports: [RouterOutlet, MatCardModule],
+  imports: [RouterOutlet, MatCardModule, MatPaginatorModule],
   templateUrl: './category.component.html',
   styleUrl: './category.component.scss',
 })
@@ -28,6 +29,8 @@ export class CategoryComponent {
     vote_average: number;
     vote_count: number;
   }[] = [];
+  pageIndex = 0;
+  pageSize = 5;
 
   constructor(
     private route: ActivatedRoute,
@@ -36,6 +39,7 @@ export class CategoryComponent {
   ) {
     this.queryParam = '';
   }
+
   ngOnInit(): void {
     this.route.params.subscribe((params) => {
       this.queryParam = params['categoryName'];
@@ -49,7 +53,18 @@ export class CategoryComponent {
     });
     this.movieService.fetchDataFromApi(this.queryParam);
   }
+
   onMovieClick(movieId: number): void {
     this.router.navigate(['/movies', movieId]);
+  }
+
+  onPageChange(event: any): void {
+    this.pageIndex = event.pageIndex;
+    this.pageSize = event.pageSize;
+  }
+  getCurrentPageItems(): any[] {
+    const startIndex = this.pageIndex * this.pageSize;
+    const endIndex = startIndex + this.pageSize;
+    return this.hubmovie.slice(startIndex, endIndex);
   }
 }
