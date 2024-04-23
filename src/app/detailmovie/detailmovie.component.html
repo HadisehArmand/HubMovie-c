@@ -2,7 +2,7 @@
   <div class="w-8/12">
     <div class="grid grid-cols-2">
       <img mat-card-image src="{{ movie.poster_path }}" />
-      <div class="">
+      <div class="ml-10 xl:ml-0">
         <p class="text-left text-4xl ml-14">{{ movie.title }}</p>
         <div class="grid grid-cols-2 mt-8">
           <p class="font-medium my-5">popularity</p>
@@ -20,13 +20,8 @@
         <p class="font-medium my-7">description:</p>
         <p>{{ movie.overview }}</p>
 
-        <div class="my-28" dir="rtl">
-          <button
-            [routerLink]="'category/:categoryName'"
-            class="bg-green-700 text-white w-20 h-12"
-          >
-            Back
-          </button>
+        <div class="w-20 h-8 bg-green-700 text-white text-center my-24">
+          <a href="javascript:void(0)" dir="rtl" (click)="goBack()"> Back </a>
         </div>
       </div>
     </div>

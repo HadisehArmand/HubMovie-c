@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { MovieService } from '../app.service';
 import { Genre } from '../app.service';
 import { RouterOutlet, RouterLink } from '@angular/router';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-detailmovie',
@@ -18,9 +19,16 @@ export class DetailmovieComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private movieService: MovieService
+    private movieService: MovieService,
+    private location: Location
   ) {
     this.movieId = 0;
+  }
+  goBack() {
+    // window.history.back();
+    this.location.back();
+
+    console.log('goBack()...');
   }
 
   ngOnInit(): void {
