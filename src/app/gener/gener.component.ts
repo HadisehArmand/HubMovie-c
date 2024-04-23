@@ -1,18 +1,25 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MovieService } from '../app.service';
 import { RouterOutlet } from '@angular/router';
 import { MatCardModule } from '@angular/material/card';
 import { MatPaginatorModule } from '@angular/material/paginator';
+import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 
 @Component({
   selector: 'app-gener',
   standalone: true,
-  imports: [RouterOutlet, MatCardModule, MatPaginatorModule],
+  imports: [
+    RouterOutlet,
+    MatCardModule,
+    MatPaginatorModule,
+    InfiniteScrollModule,
+  ],
   templateUrl: './gener.component.html',
   styleUrl: './gener.component.scss',
 })
 export class GenerComponent {
+  @ViewChild('searchResults') searchResults: ElementRef<HTMLDivElement>;
   queryParam: string;
   hubmovie: {
     adult: boolean;
@@ -39,6 +46,7 @@ export class GenerComponent {
     private movieService: MovieService
   ) {
     this.queryParam = '';
+    this.searchResults = {} as ElementRef<HTMLDivElement>;
   }
   ngOnInit(): void {
     this.route.params.subscribe((params) => {
@@ -56,13 +64,25 @@ export class GenerComponent {
   onMovieClick(movieId: number): void {
     this.router.navigate(['/movies', movieId]);
   }
-  onPageChange(event: any): void {
-    this.pageIndex = event.pageIndex;
-    this.pageSize = event.pageSize;
-  }
-  getCurrentPageItems(): any[] {
-    const startIndex = this.pageIndex * this.pageSize;
-    const endIndex = startIndex + this.pageSize;
-    return this.hubmovie.slice(startIndex, endIndex);
+  // for pagination
+  // onPageChange(event: any): void {
+  //   this.pageIndex = event.pageIndex;
+  //   this.pageSize = event.pageSize;
+  // }
+  // getCurrentPageItems(): any[] {
+  //   const startIndex = this.pageIndex * this.pageSize;
+  //   const endIndex = startIndex + this.pageSize;
+  //   return this.hubmovie.slice(startIndex, endIndex);
+  // }
+
+  // for infinite-scoroll
+  onScroll(): void {
+    const scrollPosition =
+      this.searchResults.nativeElement.scrollHeight -
+      this.searchResults.nativeElement.clientHeight;
+    if (this.searchResults.nativeElement.scrollTop >= scrollPosition) {
+      console.log('call api - gener');
+      this.fetchCategoryData();
+    }
   }
 }

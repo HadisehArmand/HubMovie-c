@@ -25,7 +25,6 @@ export class DetailmovieComponent implements OnInit {
     this.movieId = 0;
   }
   goBack() {
-    // window.history.back();
     this.location.back();
 
     console.log('goBack()...');
