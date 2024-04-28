@@ -39,6 +39,8 @@ export class CategoryComponent {
   }[] = [];
   pageIndex = 0;
   pageSize = 5;
+  pageRange = 1;
+  oldQuery = [];
 
   constructor(
     private route: ActivatedRoute,
@@ -55,12 +57,21 @@ export class CategoryComponent {
       this.fetchCategoryData();
     });
   }
-
   fetchCategoryData(): void {
+    // Subscribe to the movie items observable
     this.movieService.getMovieItem$().subscribe((items) => {
+      // Update the hubmovie array with the received items
       this.hubmovie = items || [];
     });
-    this.movieService.fetchDataFromApi(this.queryParam);
+
+    // Fetch new movies from the API
+    this.movieService.fetchDataFromApi(this.queryParam, this.pageRange);
+
+    // Subscribe to the movie items observable again to get the updated hubmovie
+    this.movieService.getMovieItem$().subscribe((items) => {
+      // Combine the new movies with the existing ones
+      this.hubmovie = [...this.hubmovie, ...(items || [])];
+    });
   }
 
   onMovieClick(movieId: number): void {
@@ -79,12 +90,7 @@ export class CategoryComponent {
 
   // for infinite-scoroll
   onScroll(): void {
-    const scrollPosition =
-      this.searchResults.nativeElement.scrollHeight -
-      this.searchResults.nativeElement.clientHeight;
-    if (this.searchResults.nativeElement.scrollTop >= scrollPosition) {
-      console.log('call api');
-      this.fetchCategoryData();
-    }
+    this.pageRange += 1;
+    this.fetchCategoryData();
   }
 }

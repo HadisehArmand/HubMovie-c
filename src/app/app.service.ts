@@ -64,14 +64,14 @@ export class MovieService {
     this.genres.update(() => newGenres);
   }
 
-  fetchDataFromApi(q: string) {
+  fetchDataFromApi(q: string, n: number) {
     this.movie.update((state) => ({
       ...state,
       hubmovie: [],
     }));
 
     fetch(
-      `https://api.themoviedb.org/3/movie/${q}?api_key=4330f1f9e53b1cb6cdb2f0371cfdf059`
+      `https://api.themoviedb.org/3/movie/${q}?api_key=4330f1f9e53b1cb6cdb2f0371cfdf059&page=${n}`
     )
       .then((response) => {
         if (!response.ok) {
@@ -86,7 +86,7 @@ export class MovieService {
         console.error('Error fetching data from API:', error);
       });
   }
-  fetchGenerDataFromApi(q: any) {
+  fetchGenerDataFromApi(q: any, n: number) {
     let qId: any;
     this.movie.update((state) => ({
       ...state,
@@ -99,7 +99,7 @@ export class MovieService {
         return;
       }
       fetch(
-        `https://api.themoviedb.org/3/discover/movie?api_key=4330f1f9e53b1cb6cdb2f0371cfdf059&with_genres=${qId}`
+        `https://api.themoviedb.org/3/discover/movie?api_key=4330f1f9e53b1cb6cdb2f0371cfdf059&with_genres=${qId}&page=${n}`
       )
         .then((response) => {
           if (!response.ok) {

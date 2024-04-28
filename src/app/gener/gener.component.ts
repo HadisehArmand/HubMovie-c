@@ -39,6 +39,7 @@ export class GenerComponent {
   }[] = [];
   pageIndex = 0;
   pageSize = 5;
+  pageRange = 1;
 
   constructor(
     private route: ActivatedRoute,
@@ -59,7 +60,7 @@ export class GenerComponent {
     this.movieService.getMovieItem$().subscribe((items) => {
       this.hubmovie = items || [];
     });
-    this.movieService.fetchGenerDataFromApi(this.queryParam);
+    this.movieService.fetchGenerDataFromApi(this.queryParam, this.pageRange);
   }
   onMovieClick(movieId: number): void {
     this.router.navigate(['/movies', movieId]);
@@ -77,12 +78,7 @@ export class GenerComponent {
 
   // for infinite-scoroll
   onScroll(): void {
-    const scrollPosition =
-      this.searchResults.nativeElement.scrollHeight -
-      this.searchResults.nativeElement.clientHeight;
-    if (this.searchResults.nativeElement.scrollTop >= scrollPosition) {
-      console.log('call api - gener');
-      this.fetchCategoryData();
-    }
+    this.pageRange += 1;
+    this.fetchCategoryData();
   }
 }
