@@ -46,6 +46,20 @@ export class MovieService {
     return this.genres.pipe();
   }
 
+  // updateMovieItems(newMovies: any[]) {
+  //   const updatedMovies = newMovies.map((movie) => ({
+  //     ...movie,
+  //     poster_path: 'https://image.tmdb.org/t/p/w500' + movie.poster_path,
+  //     backdrop_path: 'https://image.tmdb.org/t/p/w500' + movie.backdrop_path,
+  //     release_date: movie.release_date.slice(0, 4),
+  //   }));
+
+  //   this.movie.update((state) => ({
+  //     ...state,
+  //     hubmovie: updatedMovies,
+  //   }));
+  // }
+
   updateMovieItems(newMovies: any[]) {
     const updatedMovies = newMovies.map((movie) => ({
       ...movie,
@@ -56,8 +70,11 @@ export class MovieService {
 
     this.movie.update((state) => ({
       ...state,
-      hubmovie: updatedMovies,
+      hubmovie: state.hubmovie
+        ? state.hubmovie.concat(updatedMovies)
+        : updatedMovies,
     }));
+    console.log('run');
   }
 
   updateGenres(newGenres: Genre[]) {

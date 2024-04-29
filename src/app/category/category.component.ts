@@ -57,21 +57,20 @@ export class CategoryComponent {
       this.fetchCategoryData();
     });
   }
+  // fetchCategoryData(): void {
+  //   this.movieService.getMovieItem$().subscribe((items) => {
+  //     this.hubmovie = items || [];
+  //   });
+  //   this.movieService.fetchDataFromApi(this.queryParam, this.pageRange);
+  //   this.movieService.getMovieItem$().subscribe((items) => {
+  //     this.hubmovie = [...this.hubmovie, ...(items || [])];
+  //   });
+  // }
   fetchCategoryData(): void {
-    // Subscribe to the movie items observable
     this.movieService.getMovieItem$().subscribe((items) => {
-      // Update the hubmovie array with the received items
       this.hubmovie = items || [];
     });
-
-    // Fetch new movies from the API
     this.movieService.fetchDataFromApi(this.queryParam, this.pageRange);
-
-    // Subscribe to the movie items observable again to get the updated hubmovie
-    this.movieService.getMovieItem$().subscribe((items) => {
-      // Combine the new movies with the existing ones
-      this.hubmovie = [...this.hubmovie, ...(items || [])];
-    });
   }
 
   onMovieClick(movieId: number): void {
