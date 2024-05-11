@@ -28,16 +28,17 @@
   [infiniteScrollDistance]="1"
   [infiniteScrollThrottle]="25"
   (scrolled)="onScroll()"
-></div>
-<button class="w-full grid grid-cols-3 xl:grid-cols-4 gap-0">
-  @for (hubmovie of this.hubmovie; track hubmovie.id){
-  <a class="example-card w-3/4 my-8" (click)="onMovieClick(hubmovie.id)">
-    <img mat-card-image [src]="hubmovie.poster_path" />
+>
+  <div class="w-full grid grid-cols-3 xl:grid-cols-4 gap-0">
+    @for (hubmovie of this.hubmovie; track hubmovie.id) {
+      <a class="example-card w-3/4 my-8 cursor-pointer" (click)="onMovieClick(hubmovie.id)">
+        <img mat-card-image [src]="hubmovie.poster_path" />
 
-    <div class="grid justify-center">
-      <p>{{ hubmovie.title }}</p>
-      <p>{{ hubmovie.popularity }}</p>
-    </div>
-  </a>
-  }
-</button>
+        <div class="grid justify-center">
+          <p>{{ hubmovie.title }}</p>
+          <p>{{ hubmovie.popularity }}</p>
+        </div>
+      </a>
+    }
+  </div>
+</div>

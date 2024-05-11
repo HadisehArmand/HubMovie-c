@@ -5,6 +5,8 @@ import { RouterOutlet } from '@angular/router';
 import { MatCardModule } from '@angular/material/card';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
+import {take} from "rxjs";
+import {takeUntilDestroyed} from "@angular/core/rxjs-interop";
 
 @Component({
   selector: 'app-gener',
@@ -52,16 +54,22 @@ export class GenerComponent {
   ngOnInit(): void {
     this.route.params.subscribe((params) => {
       this.queryParam = params['generName'];
+      this.pageRange = 1;
       this.fetchCategoryData();
     });
   }
 
+
   fetchCategoryData(): void {
-    this.movieService.getMovieItem$().subscribe((items) => {
+    this.movieService.getMovieItem$().pipe(take(1)).subscribe((items) => {
+      console.log(items);
       this.hubmovie = items || [];
     });
+
     this.movieService.fetchGenerDataFromApi(this.queryParam, this.pageRange);
   }
+
+
   onMovieClick(movieId: number): void {
     this.router.navigate(['/movies', movieId]);
   }

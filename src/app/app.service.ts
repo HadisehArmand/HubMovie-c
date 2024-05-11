@@ -81,13 +81,13 @@ export class MovieService {
     this.genres.update(() => newGenres);
   }
 
-  fetchDataFromApi(q: string, n: number) {
+  fetchDataFromApi(q: string, n: number, genreId?: number) {
     this.movie.update((state) => ({
       ...state,
       hubmovie: [],
     }));
 
-    fetch(
+    fetch( // ${genreId ? `&withGenre=${genreId}` : ''}
       `https://api.themoviedb.org/3/movie/${q}?api_key=4330f1f9e53b1cb6cdb2f0371cfdf059&page=${n}`
     )
       .then((response) => {
@@ -107,7 +107,7 @@ export class MovieService {
     let qId: any;
     this.movie.update((state) => ({
       ...state,
-      hubmovie: [],
+      // hubmovie: [],
     }));
     this.fetchGenresFromApi().then((genres) => {
       const genre = genres.find((genre) => genre.name === q);
