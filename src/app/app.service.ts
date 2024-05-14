@@ -124,7 +124,6 @@ export class MovieService {
     isgenre?: boolean,
     genreId?: number
   ) {
-    // &with_genres=${genreId}
     let apiRoot = `https://api.themoviedb.org/3/${endpoint}?api_key=4330f1f9e53b1cb6cdb2f0371cfdf059&page=${page}`;
     if (isgenre) {
       apiRoot = `https://api.themoviedb.org/3/${endpoint}?api_key=4330f1f9e53b1cb6cdb2f0371cfdf059&with_genres=${genreId}&page=${page}`;

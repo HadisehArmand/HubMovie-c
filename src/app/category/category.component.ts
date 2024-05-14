@@ -5,6 +5,7 @@ import { RouterOutlet } from '@angular/router';
 import { MatCardModule } from '@angular/material/card';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
+import { take } from 'rxjs';
 
 @Component({
   selector: 'app-category',
@@ -54,13 +55,17 @@ export class CategoryComponent {
   ngOnInit(): void {
     this.route.params.subscribe((params) => {
       this.queryParam = params['categoryName'];
+      this.pageRange = 1;
       this.fetchCategoryData();
     });
   }
   fetchCategoryData(): void {
-    this.movieService.getMovieItem$().subscribe((items) => {
-      this.hubmovie = items || [];
-    });
+    this.movieService
+      .getMovieItem$()
+      .pipe(take(1))
+      .subscribe((items) => {
+        this.hubmovie = items || [];
+      });
     this.movieService.fetchDataFromApi(this.queryParam, this.pageRange, false);
   }
 
