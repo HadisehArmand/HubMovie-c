@@ -5,8 +5,8 @@ import { RouterOutlet } from '@angular/router';
 import { MatCardModule } from '@angular/material/card';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
-import {take} from "rxjs";
-import {takeUntilDestroyed} from "@angular/core/rxjs-interop";
+import { take } from 'rxjs';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-gener',
@@ -59,32 +59,21 @@ export class GenerComponent {
     });
   }
 
-
   fetchCategoryData(): void {
-    this.movieService.getMovieItem$().pipe(take(1)).subscribe((items) => {
-      console.log(items);
-      this.hubmovie = items || [];
-    });
+    this.movieService
+      .getMovieItem$()
+      .pipe(take(1))
+      .subscribe((items) => {
+        console.log(items);
+        this.hubmovie = items || [];
+      });
 
-    this.movieService.fetchGenerDataFromApi(this.queryParam, this.pageRange);
+    this.movieService.fetchDataFromApi(this.queryParam, this.pageRange, true);
   }
-
 
   onMovieClick(movieId: number): void {
     this.router.navigate(['/movies', movieId]);
   }
-  // for pagination
-  // onPageChange(event: any): void {
-  //   this.pageIndex = event.pageIndex;
-  //   this.pageSize = event.pageSize;
-  // }
-  // getCurrentPageItems(): any[] {
-  //   const startIndex = this.pageIndex * this.pageSize;
-  //   const endIndex = startIndex + this.pageSize;
-  //   return this.hubmovie.slice(startIndex, endIndex);
-  // }
-
-  // for infinite-scoroll
   onScroll(): void {
     this.pageRange += 1;
     this.fetchCategoryData();

@@ -57,37 +57,16 @@ export class CategoryComponent {
       this.fetchCategoryData();
     });
   }
-  // fetchCategoryData(): void {
-  //   this.movieService.getMovieItem$().subscribe((items) => {
-  //     this.hubmovie = items || [];
-  //   });
-  //   this.movieService.fetchDataFromApi(this.queryParam, this.pageRange);
-  //   this.movieService.getMovieItem$().subscribe((items) => {
-  //     this.hubmovie = [...this.hubmovie, ...(items || [])];
-  //   });
-  // }
   fetchCategoryData(): void {
     this.movieService.getMovieItem$().subscribe((items) => {
       this.hubmovie = items || [];
     });
-    this.movieService.fetchDataFromApi(this.queryParam, this.pageRange);
+    this.movieService.fetchDataFromApi(this.queryParam, this.pageRange, false);
   }
 
   onMovieClick(movieId: number): void {
     this.router.navigate(['/movies', movieId]);
   }
-  // for pagination
-  // onPageChange(event: any): void {
-  //   this.pageIndex = event.pageIndex;
-  //   this.pageSize = event.pageSize;
-  // }
-  // getCurrentPageItems(): any[] {
-  //   const startIndex = this.pageIndex * this.pageSize;
-  //   const endIndex = startIndex + this.pageSize;
-  //   return this.hubmovie.slice(startIndex, endIndex);
-  // }
-
-  // for infinite-scoroll
   onScroll(): void {
     this.pageRange += 1;
     this.fetchCategoryData();
