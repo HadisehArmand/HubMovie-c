@@ -1,12 +1,10 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { MovieService } from '../app.service';
+import { Component, ElementRef, ViewChild, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { MatCardModule } from '@angular/material/card';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
-import { take } from 'rxjs';
-
+import { BaseService } from '../base-component/base.service';
+import { ActivatedRoute } from '@angular/router';
 @Component({
   selector: 'app-category',
   standalone: true,
@@ -17,63 +15,33 @@ import { take } from 'rxjs';
     InfiniteScrollModule,
   ],
   templateUrl: './category.component.html',
-  styleUrl: './category.component.scss',
+  styleUrls: ['./category.component.scss'],
 })
-export class CategoryComponent {
+export class CategoryComponent implements OnInit {
   @ViewChild('searchResults') searchResults: ElementRef<HTMLDivElement>;
-  queryParam: string;
-  hubmovie: {
-    adult: boolean;
-    backdrop_path: string;
-    genre_ids: number[];
-    id: number;
-    original_language: string;
-    original_title: string;
-    overview: string;
-    popularity: number;
-    poster_path: string;
-    release_date: string;
-    title: string;
-    video: boolean;
-    vote_average: number;
-    vote_count: number;
-  }[] = [];
-  pageIndex = 0;
-  pageSize = 5;
-  pageRange = 1;
-  oldQuery = [];
 
-  constructor(
-    private route: ActivatedRoute,
-    private router: Router,
-    private movieService: MovieService
-  ) {
-    this.queryParam = '';
+  constructor(public baseService: BaseService, private route: ActivatedRoute) {
     this.searchResults = {} as ElementRef<HTMLDivElement>;
   }
 
   ngOnInit(): void {
     this.route.params.subscribe((params) => {
-      this.queryParam = params['categoryName'];
-      this.pageRange = 1;
-      this.fetchCategoryData();
+      this.baseService.queryParam = params['categoryName'];
+      this.baseService.pageRange = 1;
+      this.baseService.isGener = false;
+      this.baseService.fetchCategoryData();
     });
-  }
-  fetchCategoryData(): void {
-    this.movieService
-      .getMovieItem$()
-      .pipe(take(1))
-      .subscribe((items) => {
-        this.hubmovie = items || [];
-      });
-    this.movieService.fetchDataFromApi(this.queryParam, this.pageRange, false);
   }
 
   onMovieClick(movieId: number): void {
-    this.router.navigate(['/movies', movieId]);
+    this.baseService.onMovieClick(movieId);
   }
+
   onScroll(): void {
-    this.pageRange += 1;
-    this.fetchCategoryData();
+    this.baseService.onScroll();
+  }
+
+  get hubmovie() {
+    return this.baseService.hubmovie;
   }
 }

@@ -71,7 +71,8 @@ export class MovieService {
     this.movie.update((state) => ({
       ...state,
       hubmovie: state.hubmovie
-        ? state.hubmovie.concat(updatedMovies)
+        ? // ? state.hubmovie.concat(updatedMovies)
+          state.hubmovie.concat(updatedMovies)
         : updatedMovies,
     }));
     console.log('run');
