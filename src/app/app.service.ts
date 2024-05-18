@@ -75,7 +75,7 @@ export class MovieService {
           state.hubmovie.concat(updatedMovies)
         : updatedMovies,
     }));
-    console.log('run');
+    // console.log('run');
   }
 
   updateGenres(newGenres: Genre[]) {
@@ -148,7 +148,7 @@ export class MovieService {
     return this.movie.pipe(
       select((state) => {
         const movie = state.hubmovie?.find((movie) => movie.id === id);
-        console.log(state.hubmovie?.find((movie) => movie.id === id));
+        // console.log(state.hubmovie?.find((movie) => movie.id === id));
         return movie || null;
       })
     );

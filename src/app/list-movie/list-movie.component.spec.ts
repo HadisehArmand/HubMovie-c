@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { GenerComponent } from './gener.component';
+import { ListMovieComponent } from './list-movie.component';
 
-describe('GenerComponent', () => {
-  let component: GenerComponent;
-  let fixture: ComponentFixture<GenerComponent>;
+describe('ListMovieComponent', () => {
+  let component: ListMovieComponent;
+  let fixture: ComponentFixture<ListMovieComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [GenerComponent]
+      imports: [ListMovieComponent]
     })
     .compileComponents();
     
-    fixture = TestBed.createComponent(GenerComponent);
+    fixture = TestBed.createComponent(ListMovieComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

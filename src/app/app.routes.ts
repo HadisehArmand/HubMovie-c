@@ -1,16 +1,17 @@
 import { Routes } from '@angular/router';
-import { CategoryComponent } from './category/category.component';
-import { GenerComponent } from './gener/gener.component';
+import { ListMovieComponent } from './list-movie/list-movie.component';
 import { DetailmovieComponent } from './detailmovie/detailmovie.component';
 
 export const routes: Routes = [
   {
     path: 'category/:categoryName',
-    component: CategoryComponent,
+    component: ListMovieComponent,
+    data: { queryParamName: 'categoryName', isGener: false },
   },
   {
     path: 'gener/:generName',
-    component: GenerComponent,
+    component: ListMovieComponent,
+    data: { queryParamName: 'generName', isGener: true },
   },
   { path: 'movies/:id', component: DetailmovieComponent },
 ];

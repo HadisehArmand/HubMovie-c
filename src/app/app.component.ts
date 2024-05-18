@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { RouterOutlet, RouterLink } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { RouterOutlet, RouterLink, ActivatedRoute } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatToolbarModule } from '@angular/material/toolbar';
@@ -48,15 +48,25 @@ declare var localStorage: Storage;
   styleUrl: './app.component.scss',
   providers: [],
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
+  queryParamName: string = '';
+  isGener: boolean = false;
+
   title = 'HubMovie';
   genres: any[] = [];
-  constructor(private router: Router, private movieService: MovieService) {
+  constructor(
+    private movieService: MovieService,
+    private route: ActivatedRoute
+  ) {
     this.genres = [];
   }
   ngOnInit(): void {
     this.movieService.fetchGenresFromApi().then((genres) => {
       this.genres = genres;
+    });
+    this.route.data.subscribe((data) => {
+      this.queryParamName = data['queryParamName'];
+      this.isGener = data['isGener'];
     });
   }
 }

@@ -5,8 +5,9 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { BaseService } from '../base-component/base.service';
 import { ActivatedRoute } from '@angular/router';
+
 @Component({
-  selector: 'app-category',
+  selector: 'app-unified',
   standalone: true,
   imports: [
     RouterOutlet,
@@ -14,22 +15,28 @@ import { ActivatedRoute } from '@angular/router';
     MatPaginatorModule,
     InfiniteScrollModule,
   ],
-  templateUrl: './category.component.html',
-  styleUrls: ['./category.component.scss'],
+  templateUrl: './list-movie.component.html',
+  styleUrls: ['./list-movie.component.scss'],
 })
-export class CategoryComponent implements OnInit {
+export class ListMovieComponent implements OnInit {
   @ViewChild('searchResults') searchResults: ElementRef<HTMLDivElement>;
+  queryParamName: string = '';
+  isGener: boolean = false;
 
   constructor(public baseService: BaseService, private route: ActivatedRoute) {
     this.searchResults = {} as ElementRef<HTMLDivElement>;
   }
 
   ngOnInit(): void {
-    this.route.params.subscribe((params) => {
-      this.baseService.queryParam = params['categoryName'];
-      this.baseService.pageRange = 1;
-      this.baseService.isGener = false;
-      this.baseService.fetchCategoryData();
+    this.route.data.subscribe((data) => {
+      this.queryParamName = data['queryParamName'];
+      this.isGener = data['isGener'];
+      this.route.params.subscribe((params) => {
+        this.baseService.queryParam = params[this.queryParamName];
+        this.baseService.pageRange = 1;
+        this.baseService.isGener = this.isGener;
+        this.baseService.fetchCategoryData();
+      });
     });
   }
 
