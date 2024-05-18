@@ -7,7 +7,7 @@ import { BaseService } from '../base-component/base.service';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
-  selector: 'app-unified',
+  selector: 'list-movie',
   standalone: true,
   imports: [
     RouterOutlet,
