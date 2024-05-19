@@ -32,7 +32,7 @@ export interface Genre {
 export class MovieService {
   private movie = createStore({ name: 'movie' }, withProps<Movie>({}));
   private genres = createStore({ name: 'genres' }, withProps<Genre[]>([]));
-  private currentCategory: string | null = null; // ردیابی دسته‌بندی فعلی
+  private currentCategory: string | null = null;
 
   constructor() {
     const persist = persistState(this.movie, {
