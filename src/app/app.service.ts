@@ -20,16 +20,19 @@ interface Movie {
     vote_count: number;
   }[];
 }
+
 export interface Genre {
   id: number;
   name: string;
 }
+
 @Injectable({
   providedIn: 'root',
 })
 export class MovieService {
   private movie = createStore({ name: 'movie' }, withProps<Movie>({}));
   private genres = createStore({ name: 'genres' }, withProps<Genre[]>([]));
+  private currentCategory: string | null = null; // ردیابی دسته‌بندی فعلی
 
   constructor() {
     const persist = persistState(this.movie, {
@@ -46,21 +49,7 @@ export class MovieService {
     return this.genres.pipe();
   }
 
-  // updateMovieItems(newMovies: any[]) {
-  //   const updatedMovies = newMovies.map((movie) => ({
-  //     ...movie,
-  //     poster_path: 'https://image.tmdb.org/t/p/w500' + movie.poster_path,
-  //     backdrop_path: 'https://image.tmdb.org/t/p/w500' + movie.backdrop_path,
-  //     release_date: movie.release_date.slice(0, 4),
-  //   }));
-
-  //   this.movie.update((state) => ({
-  //     ...state,
-  //     hubmovie: updatedMovies,
-  //   }));
-  // }
-
-  updateMovieItems(newMovies: any[]) {
+  updateMovieItems(newMovies: any[], append: boolean) {
     const updatedMovies = newMovies.map((movie) => ({
       ...movie,
       poster_path: 'https://image.tmdb.org/t/p/w500' + movie.poster_path,
@@ -70,12 +59,12 @@ export class MovieService {
 
     this.movie.update((state) => ({
       ...state,
-      hubmovie: state.hubmovie
-        ? // ? state.hubmovie.concat(updatedMovies)
-          state.hubmovie.concat(updatedMovies)
+      hubmovie: append
+        ? state.hubmovie
+          ? state.hubmovie.concat(updatedMovies)
+          : updatedMovies
         : updatedMovies,
     }));
-    // console.log('run');
   }
 
   updateGenres(newGenres: Genre[]) {
@@ -100,7 +89,10 @@ export class MovieService {
   }
 
   fetchDataFromApi(q: string, n: number, isgenre?: boolean) {
-    this.movie.next({ hubmovie: [] });
+    if (this.currentCategory !== q) {
+      this.movie.update(() => ({ hubmovie: [] }));
+      this.currentCategory = q;
+    }
 
     if (isgenre) {
       this.fetchGenresFromApi()
@@ -137,18 +129,17 @@ export class MovieService {
         return response.json();
       })
       .then((newMovies) => {
-        this.updateMovieItems(newMovies.results);
+        this.updateMovieItems(newMovies.results, page > 1);
       })
       .catch((error) => {
         console.error('Error fetching data from API:', error);
       });
   }
-  // new
+
   getMovieById(id: number) {
     return this.movie.pipe(
       select((state) => {
         const movie = state.hubmovie?.find((movie) => movie.id === id);
-        // console.log(state.hubmovie?.find((movie) => movie.id === id));
         return movie || null;
       })
     );
